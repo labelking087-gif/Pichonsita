@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestra Galaxia ✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0b0d17;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fondo con efecto de estrellas */
+    #stars-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .star {
+      position: absolute;
+      background-color: #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffffff, 0 0 20px #ff79c6;
+      animation: pulse 2s infinite alternate;
+      transition: transform 0.3s;
+    }
+
+    .star:hover {
+      transform: scale(1.8);
+      box-shadow: 0 0 15px #ffffff, 0 0 30px #ffb86c;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Contenido central */
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      margin-bottom: 25px;
+    }
+
+    /* Modal / Ventana emergente de mensaje */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      background: #ff79c6;
+      border: none;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #ff92d0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stars-container"></div>
+
+  <div class="content">
+    <h1>Feliz Primer Mes ✨</h1>
+    <p class="subtitle">Haz clic en cada una de las estrellas para descubrir un secreto.</p>
+  </div>
+
+  <!-- Modal emergente -->
+  <div class="modal" id="messageModal">
+    <div class="modal-content">
+      <div class="modal-text" id="modalText"></div>
+      <button class="close-btn" onclick="closeModal()">Cerrar ✨</button>
+    </div>
+  </div>
+
+  <script>
+    // Personaliza aquí tus mensajes para las estrellas
+    const mensajes = [
+      "Gracias por hacer de este primer mes un tiempo lleno de sonrisas y momentos especiales.",
+      "Cada momento a tu lado se siente mágico. Me encanta compartir tiempo contigo.",
+      "Eres una persona increíble y maravillosa. Me alegra mucho haberte conocido.",
+      "Por un primer mes lleno de aprendizajes, recuerdos lindos y muchos momentos inolvidables.",
+      "Gracias por iluminar mis días con tu compañía y tu cariño."
+    ];
+
+    const container = document.getElementById('stars-container');
+    const modal = document.getElementById('messageModal');
+    const modalText = document.getElementById('modalText');
+
+    // Generar estrellas en posiciones aleatorias
+    mensajes.forEach((msg, index) => {
+      const star = document.createElement('div');
+      star.className = 'star';
+
+      // Posición aleatoria en pantalla
+      const posX = Math.random() * 80 + 10; // entre 10% y 90%
+      const posY = Math.random() * 80 + 10;
+      const size = Math.random() * 10 + 12; // tamaño en px
+
+      star.style.left = `${posX}%`;
+      star.style.top = `${posY}%`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+
+      star.addEventListener('click', () => {
+        modalText.innerText = msg;
+        modal.style.display = 'flex';
+      });
+
+      container.appendChild(star);
+    });
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
